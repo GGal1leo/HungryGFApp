@@ -11,80 +11,133 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="?android:attr/colorBackground">
+    android:background="@drawable/background_gradient">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="24dp">
+        android:paddingHorizontal="20dp"
+        android:paddingTop="32dp"
+        android:paddingBottom="24dp">
 
-        <!-- Header Section -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/headerCard"
+        <!-- Modern Header Section with Gradient and Better Layout -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/headerSection"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="8dp"
-            app:cardBackgroundColor="?attr/colorPrimaryContainer"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/header_gradient_background"
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="24dp">
+            <!-- Decorative Background Elements -->
+            <ImageView
+                android:id="@+id/decorativeIcon1"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:alpha="0.1"
+                android:src="@drawable/ic_restaurant"
+                android:rotation="15"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="?attr/colorOnPrimaryContainer" />
+
+            <ImageView
+                android:id="@+id/decorativeIcon2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:alpha="0.08"
+                android:src="@drawable/ic_location"
+                android:rotation="-20"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:tint="?attr/colorOnPrimaryContainer" />
+
+            <!-- Main App Icon with elevated look -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/iconContainer"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="40dp"
+                app:cardElevation="12dp"
+                app:cardBackgroundColor="?attr/colorSurface"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/appIcon"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="16dp"
                     android:src="@drawable/ic_restaurant"
                     android:contentDescription="@string/content_desc_app_icon"
-                    app:tint="?attr/colorOnPrimaryContainer" />
+                    app:tint="@color/hungry_orange" />
 
-                <TextView
-                    android:id="@+id/titleText"
-                    style="@style/HungryGF.Text.Title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_where_hungry"
-                    android:textAlignment="center"
-                    android:textColor="?attr/colorOnPrimaryContainer"
-                    android:textSize="28sp"
-                    android:fontFamily="sans-serif-light" />
+            </androidx.cardview.widget.CardView>
 
-                <TextView
-                    android:id="@+id/subtitleText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/subtitle_find_restaurants"
-                    android:textAlignment="center"
-                    android:textColor="?attr/colorOnPrimaryContainer"
-                    android:textSize="14sp"
-                    android:alpha="0.8" />
+            <!-- Title with improved typography -->
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/title_where_hungry"
+                android:textAlignment="center"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:textSize="32sp"
+                android:fontFamily="sans-serif-light"
+                android:letterSpacing="0.02"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iconContainer" />
 
-                <!-- Network Status Indicator (Optional) -->
+            <!-- Subtitle with better styling -->
+            <TextView
+                android:id="@+id/subtitleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="@string/subtitle_find_restaurants"
+                android:textAlignment="center"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:textSize="16sp"
+                android:alpha="0.85"
+                android:fontFamily="sans-serif"
+                android:lineSpacingExtra="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleText" />
+
+            <!-- Network Status with modern pill design -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/networkStatusCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#20FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/subtitleText">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="12dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:visibility="visible">
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp">
 
                     <ImageView
                         android:id="@+id/networkStatusIcon"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
                         android:layout_marginEnd="8dp"
                         android:src="@drawable/ic_wifi"
                         android:contentDescription="@string/content_desc_network_status"
@@ -97,46 +150,65 @@
                         android:text="@string/network_status_connected"
                         android:textColor="?attr/colorOnPrimaryContainer"
                         android:textSize="12sp"
-                        android:alpha="0.7" />
+                        android:fontFamily="sans-serif-medium" />
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-        </com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Search Section -->
-        <com.google.android.material.card.MaterialCardView
+        <!-- Modern Search Section with Floating Design -->
+        <androidx.cardview.widget.CardView
             android:id="@+id/searchCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginBottom="32dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="16dp"
             app:cardBackgroundColor="?attr/colorSurface"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/headerCard">
+            app:layout_constraintTop_toBottomOf="@+id/headerSection">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="28dp">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/locationInputLayout"
-                    style="@style/HungryGF.TextInputLayout"
+                <!-- Search Title -->
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="0dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="🔍 Where are you hungry?"
+                    android:textColor="?attr/colorOnSurface"
+                    android:textSize="20sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textAlignment="center" />
+
+                <!-- Location Input with Modern Design -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/locationInputLayout"
+                    style="@style/Widget.Material3.TextInputLayout.FilledBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
                     android:hint="@string/hint_enter_location"
                     app:startIconDrawable="@drawable/ic_location"
-                    app:startIconTint="?attr/colorPrimary"
+                    app:startIconTint="@color/hungry_orange"
                     app:startIconContentDescription="@string/content_desc_location_icon"
                     app:endIconMode="clear_text"
+                    app:endIconTint="?attr/colorOnSurfaceVariant"
                     app:helperText="@string/helper_text_location_examples"
-                    app:helperTextTextColor="?attr/colorOnSurfaceVariant">
+                    app:helperTextTextColor="?attr/colorOnSurfaceVariant"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxBackgroundColor="?attr/colorSurfaceVariant">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/locationInput"
@@ -144,57 +216,83 @@
                         android:layout_height="wrap_content"
                         android:inputType="text"
                         android:maxLines="1"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Button Row -->
+                <!-- Modern Button Layout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:orientation="horizontal"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:weightSum="2">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/locateMeButton"
-                        style="@style/HungryGF.Button.Secondary"
+                    <!-- Location Button with Modern Style -->
+                    <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginEnd="8dp"
-                        android:text="@string/button_locate_me"
-                        app:icon="@drawable/ic_location"
-                        app:iconGravity="textStart"
-                        app:iconPadding="8dp" />
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="?attr/colorSecondaryContainer">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/searchButton"
-                        style="@style/HungryGF.Button.Primary"
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/locateMeButton"
+                            style="@style/Widget.Material3.Button.TextButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:text="📍 Locate Me"
+                            android:textColor="?attr/colorOnSecondaryContainer"
+                            android:textSize="14sp"
+                            android:fontFamily="sans-serif-medium"
+                            android:textAllCaps="false"
+                            android:background="@android:color/transparent" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Search Button with Gradient -->
+                    <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="8dp"
-                        android:text="@string/button_find_food"
-                        app:icon="@drawable/ic_search"
-                        app:iconGravity="textStart"
-                        app:iconPadding="8dp" />
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="8dp"
+                        app:cardBackgroundColor="@color/hungry_orange">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/searchButton"
+                            style="@style/Widget.Material3.Button.TextButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:text="🍽️ Find Food"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            android:fontFamily="sans-serif-medium"
+                            android:textAllCaps="false"
+                            android:background="@android:color/transparent" />
+
+                    </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
 
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+        </androidx.cardview.widget.CardView>
 
-        <!-- Loading Section -->
-        <com.google.android.material.card.MaterialCardView
+        <!-- Modern Loading Section with Animated Design -->
+        <androidx.cardview.widget.CardView
             android:id="@+id/loadingCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginBottom="32dp"
             android:visibility="gone"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="12dp"
             app:cardBackgroundColor="?attr/colorSurface"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -204,16 +302,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="24dp"
+                android:padding="32dp"
                 android:gravity="center">
 
-                <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:id="@+id/progressBar"
-                    style="@style/HungryGF.ProgressBar"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginBottom="16dp"
-                    android:indeterminate="true" />
+                <!-- Loading Animation Container -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginBottom="24dp"
+                    app:cardCornerRadius="40dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/hungry_orange_light">
+
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:id="@+id/progressBar"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:indeterminate="true"
+                        app:indicatorColor="@color/hungry_orange"
+                        app:trackColor="#20FF6B35"
+                        app:trackThickness="4dp"
+                        app:indicatorSize="40dp" />
+
+                </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:id="@+id/loadingText"
@@ -221,22 +333,25 @@
                     android:layout_height="wrap_content"
                     android:text="Searching for delicious places..."
                     android:textColor="?attr/colorOnSurface"
-                    android:textSize="16sp"
-                    android:fontFamily="sans-serif-medium" />
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textAlignment="center"
+                    android:lineSpacingExtra="2dp" />
 
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+        </androidx.cardview.widget.CardView>
 
-        <!-- Results Section -->
-        <com.google.android.material.card.MaterialCardView
+        <!-- Modern Results Section with Enhanced Design -->
+        <androidx.cardview.widget.CardView
             android:id="@+id/resultCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginBottom="32dp"
             android:visibility="gone"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="12dp"
             app:cardBackgroundColor="?attr/colorSurface"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -245,23 +360,35 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
+                android:orientation="vertical">
 
+                <!-- Result Header with better visual hierarchy -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/result_header_background"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:layout_marginBottom="12dp">
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="20dp">
 
-                    <ImageView
-                        android:id="@+id/resultIcon"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginEnd="12dp"
-                        android:src="@drawable/ic_restaurant"
-                        app:tint="?attr/colorPrimary" />
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="16dp"
+                        app:cardCornerRadius="24dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="#20FF6B35">
+
+                        <ImageView
+                            android:id="@+id/resultIcon"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_restaurant"
+                            app:tint="@color/hungry_orange" />
+
+                    </androidx.cardview.widget.CardView>
 
                     <TextView
                         android:id="@+id/resultTitle"
@@ -270,40 +397,61 @@
                         android:layout_weight="1"
                         android:text="Your Perfect Match"
                         android:textColor="?attr/colorOnSurface"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         android:fontFamily="sans-serif-medium" />
 
-                    <ImageView
-                        android:id="@+id/favoriteIcon"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_favorite"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:padding="4dp"
-                        app:tint="?attr/colorPrimary" />
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="?attr/colorSecondaryContainer">
+
+                        <ImageView
+                            android:id="@+id/favoriteIcon"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_favorite"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            app:tint="@color/hungry_orange" />
+
+                    </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/outputText"
-                    style="@style/HungryGF.Text.Body"
+                <!-- Result Content with better spacing -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="16sp"
-                    android:lineSpacingExtra="4dp" />
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:id="@+id/outputText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif"
+                        android:lineSpacingExtra="6dp"
+                        android:textColor="?attr/colorOnSurface" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+        </androidx.cardview.widget.CardView>
 
-        <!-- Tips Section -->
-        <com.google.android.material.card.MaterialCardView
+        <!-- Modern Tips Section with Glass Morphism Effect -->
+        <androidx.cardview.widget.CardView
             android:id="@+id/tipsCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="2dp"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginBottom="80dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
             app:cardBackgroundColor="?attr/colorSurfaceVariant"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -313,16 +461,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="24dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="💡 Pro Tips"
-                    android:textColor="?attr/colorOnSurfaceVariant"
-                    android:textSize="16sp"
-                    android:fontFamily="sans-serif-medium"
-                    android:layout_marginBottom="12dp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:text="💡"
+                        android:textSize="24sp"
+                        android:gravity="center"
+                        android:layout_marginEnd="12dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Pro Tips"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:textSize="18sp"
+                        android:fontFamily="sans-serif-medium" />
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -330,24 +495,31 @@
                     android:text="• Try specific areas like 'downtown' or 'near Central Park'\n• Use neighborhood names for better results\n• Include your city for more accurate suggestions"
                     android:textColor="?attr/colorOnSurfaceVariant"
                     android:textSize="14sp"
-                    android:lineSpacingExtra="2dp" />
+                    android:lineSpacingExtra="4dp"
+                    android:fontFamily="sans-serif" />
 
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+        </androidx.cardview.widget.CardView>
 
-        <!-- Floating Action Button for History/Favorites -->
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <!-- Modern Floating Action Button with Extended Design -->
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/fabHistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:src="@drawable/ic_history"
-            android:contentDescription="View history and favorites"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="History"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium"
+            app:icon="@drawable/ic_history"
+            app:iconTint="?attr/colorOnPrimary"
+            app:backgroundTint="@color/hungry_orange"
+            app:elevation="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:tint="?attr/colorOnPrimary" />
+            android:contentDescription="View history and favorites" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

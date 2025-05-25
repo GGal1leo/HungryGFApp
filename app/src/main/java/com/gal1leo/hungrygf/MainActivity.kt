@@ -13,18 +13,20 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.cardview.widget.CardView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.card.MaterialCardView
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import kotlinx.coroutines.launch
 import kotlin.coroutines.suspendCoroutine
 import java.util.Locale
@@ -39,13 +41,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var locateMeButton: MaterialButton
     private lateinit var outputText: TextView
     private lateinit var progressBar: CircularProgressIndicator
-    private lateinit var loadingCard: MaterialCardView
-    private lateinit var resultCard: MaterialCardView
+    private lateinit var loadingCard: CardView
+    private lateinit var resultCard: CardView
+    private lateinit var tipsCard: CardView
     private lateinit var loadingText: TextView
     private lateinit var resultIcon: ImageView
     private lateinit var favoriteIcon: ImageView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    private lateinit var fabHistory: com.google.android.material.floatingactionbutton.FloatingActionButton
+    private lateinit var fabHistory: ExtendedFloatingActionButton
     
     // Network status components
     private var networkStatusIndicator: TextView? = null
@@ -65,6 +68,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        // Force light mode regardless of system setting
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -92,6 +99,7 @@ class MainActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.progressBar)
         loadingCard = findViewById(R.id.loadingCard)
         resultCard = findViewById(R.id.resultCard)
+        tipsCard = findViewById(R.id.tipsCard)
         loadingText = findViewById(R.id.loadingText)
         resultIcon = findViewById(R.id.resultIcon)
         favoriteIcon = findViewById(R.id.favoriteIcon)
@@ -179,8 +187,9 @@ class MainActivity : AppCompatActivity() {
             val locationText = locationInput.text.toString()
             hideKeyboard(it)
             
-            // Clear any previous errors
+            // Clear any previous errors (including location errors)
             locationInputLayout.error = null
+            searchButton.isEnabled = true
             
             // Always force refresh for main search button to get variety
             viewModel.searchFoodPlace(locationText, forceRefresh = true)
@@ -265,13 +274,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Show loading state
-        locationInput.setText("Getting location...")
         locateMeButton.isEnabled = false
+        locateMeButton.text = "📍 Getting..."
+        
+        // Clear any previous location errors
+        clearLocationError()
         
         // Fetch the last known location with proper null safety
         locationClient.lastLocation
             .addOnSuccessListener { location ->
                 locateMeButton.isEnabled = true
+                locateMeButton.text = "📍 Locate Me"
+                
                 if (location != null) {
                     // Validate location coordinates
                     val lat = location.latitude
@@ -286,25 +300,29 @@ class MainActivity : AppCompatActivity() {
                                 // Only set if we got a valid city name
                                 if (cityName.isNotBlank() && cityName != "Unknown location") {
                                     locationInput.setText(cityName)
+                                    clearLocationError()
                                 } else {
                                     locationInput.setText("$lat, $lon")
+                                    clearLocationError()
                                 }
                             } catch (e: Exception) {
                                 println("Error getting city name: ${e.message}")
                                 locationInput.setText("$lat, $lon")
+                                clearLocationError()
                             }
                         }
                     } else {
-                        locationInput.setText("Invalid location coordinates")
+                        showLocationError("Invalid location coordinates received")
                     }
                 } else {
-                    locationInput.setText("Unable to get location")
+                    showLocationError("Unable to get your current location")
                 }
             }
             .addOnFailureListener { exception ->
                 locateMeButton.isEnabled = true
+                locateMeButton.text = "📍 Locate Me"
                 println("Location retrieval failed: ${exception.message}")
-                locationInput.setText("Location unavailable")
+                showLocationError("Location service unavailable. Please check your GPS settings.")
             }
     }
 
@@ -374,6 +392,39 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * Show location error without disabling search functionality
+     */
+    private fun showLocationError(message: String) {
+        locationInputLayout.error = "📍 $message"
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        
+        // Add a subtle shake animation to the input layout
+        locationInputLayout.animate()
+            .translationX(-8f)
+            .setDuration(100)
+            .withEndAction {
+                locationInputLayout.animate()
+                    .translationX(8f)
+                    .setDuration(100)
+                    .withEndAction {
+                        locationInputLayout.animate()
+                            .translationX(0f)
+                            .setDuration(100)
+                    }
+            }
+    }
+    
+    /**
+     * Clear location error and re-enable search functionality
+     */
+    private fun clearLocationError() {
+        if (locationInputLayout.error != null && locationInputLayout.error.toString().startsWith("📍")) {
+            locationInputLayout.error = null
+            searchButton.isEnabled = true
+        }
+    }
+
+    /**
      * Handle the result of the permission request
      */
     override fun onRequestPermissionsResult(
@@ -391,9 +442,8 @@ class MainActivity : AppCompatActivity() {
             // If permission is granted, fetch the location
             getCurrentLocation()
         } else {
-            // If permission is denied, update the input with an error message
-            locationInput.setText("Location access denied")
-            Toast.makeText(this, "Location permission is required to use this feature", Toast.LENGTH_LONG).show()
+            // If permission is denied, show error without replacing text
+            showLocationError("Location permission is required to use this feature. Please enable it in settings.")
         }
     }
 
@@ -401,27 +451,23 @@ class MainActivity : AppCompatActivity() {
      * Handle different UI states from the ViewModel with new modern UI
      */
     private fun handleUiState(state: UiState) {
-        // Stop refresh indicator when state changes
         swipeRefreshLayout.isRefreshing = false
-        
         when (state) {
             is UiState.Idle -> {
-                loadingCard.visibility = View.GONE
-                resultCard.visibility = View.GONE
+                animateCardVisibility(loadingCard, false)
+                animateCardVisibility(resultCard, false)
                 locationInputLayout.error = null
                 outputText.text = ""
             }
-            
             is UiState.Loading -> {
-                loadingCard.visibility = View.VISIBLE
-                resultCard.visibility = View.GONE
+                animateCardVisibility(loadingCard, true)
+                animateCardVisibility(resultCard, false)
                 loadingText.text = state.message
                 searchButton.isEnabled = false
             }
-            
             is UiState.Success -> {
-                loadingCard.visibility = View.GONE
-                resultCard.visibility = View.VISIBLE
+                animateCardVisibility(loadingCard, false)
+                animateCardVisibility(resultCard, true)
                 searchButton.isEnabled = true
                 
                 // Store current result data for favorites
@@ -443,10 +489,9 @@ class MainActivity : AppCompatActivity() {
                 
                 println("Search successful for ${state.location}: ${state.restaurantName}")
             }
-            
             is UiState.Empty -> {
-                loadingCard.visibility = View.GONE
-                resultCard.visibility = View.VISIBLE
+                animateCardVisibility(loadingCard, false)
+                animateCardVisibility(resultCard, true)
                 searchButton.isEnabled = true
                 
                 // Clear current result data
@@ -463,17 +508,15 @@ class MainActivity : AppCompatActivity() {
                     outputText.append(suggestionText)
                 }
             }
-            
             is UiState.ValidationError -> {
-                loadingCard.visibility = View.GONE
-                resultCard.visibility = View.GONE
+                animateCardVisibility(loadingCard, false)
+                animateCardVisibility(resultCard, false)
                 searchButton.isEnabled = true
                 showValidationError(state.message)
             }
-            
             is UiState.Error -> {
-                loadingCard.visibility = View.GONE
-                resultCard.visibility = View.VISIBLE
+                animateCardVisibility(loadingCard, false)
+                animateCardVisibility(resultCard, true)
                 searchButton.isEnabled = true
                 
                 // Clear current result data
@@ -523,6 +566,22 @@ class MainActivity : AppCompatActivity() {
                     outputText.setOnClickListener(null)
                 }
             }
+        }
+    }
+    
+    /**
+     * Animate card visibility with fade and scale effect
+     */
+    private fun animateCardVisibility(card: CardView, visible: Boolean) {
+        if (visible) {
+            card.alpha = 0f
+            card.scaleY = 0.95f
+            card.visibility = View.VISIBLE
+            card.animate().alpha(1f).scaleY(1f).setDuration(250).start()
+        } else {
+            card.animate().alpha(0f).scaleY(0.95f).setDuration(200).withEndAction {
+                card.visibility = View.GONE
+            }.start()
         }
     }
     
