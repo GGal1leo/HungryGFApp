@@ -1,0 +1,97 @@
+<resources>
+    <string name="app_name">Hungry GF</string>
+    
+    <!-- Main screen strings -->
+    <string name="title_where_hungry">Where are you hungry?</string>
+    <string name="subtitle_find_restaurants">Find amazing restaurants near you</string>
+    <string name="hint_enter_location">Enter your location</string>
+    <string name="helper_text_location_examples">e.g., New York, Paris, or Tokyo</string>
+    <string name="button_locate_me">Locate Me</string>
+    <string name="button_find_food">Find Food</string>
+    <string name="loading_searching">Searching for delicious places...</string>
+    <string name="result_title">Your Perfect Match</string>
+    
+    <!-- Tips section -->
+    <string name="tips_title">💡 Pro Tips</string>
+    <string name="tips_content">• Try specific areas like \'downtown\' or \'near Central Park\'\n• Use neighborhood names for better results\n• Include your city for more accurate suggestions</string>
+    
+    <!-- Enhanced Error Messages -->
+    <!-- Network Errors -->
+    <string name="error_no_internet">No internet connection detected</string>
+    <string name="error_timeout">Request timed out - please try again</string>
+    <string name="error_server_unavailable">Server temporarily unavailable</string>
+    <string name="error_connection_failed">Failed to connect to server</string>
+    
+    <!-- API Errors -->
+    <string name="error_api_auth">API authentication failed</string>
+    <string name="error_api_rate_limit">Too many requests - please wait a moment</string>
+    <string name="error_api_quota">Daily API quota exceeded</string>
+    <string name="error_api_forbidden">API access forbidden</string>
+    
+    <!-- Location Errors -->
+    <string name="error_location_permission">Location permission required</string>
+    <string name="error_location_unavailable">Location services unavailable</string>
+    <string name="error_location_timeout">Location request timed out</string>
+    <string name="error_invalid_coordinates">Invalid location coordinates</string>
+    
+    <!-- Validation Errors -->
+    <string name="error_empty_location">Please enter a location</string>
+    <string name="error_invalid_location">Invalid location format</string>
+    <string name="error_location_too_short">Location name too short</string>
+    
+    <!-- Network Status -->
+    <string name="network_status_connected">Connected</string>
+    <string name="network_status_disconnected">Disconnected</string>
+    <string name="network_wifi">WiFi</string>
+    <string name="network_mobile">Mobile Data</string>
+    <string name="network_ethernet">Ethernet</string>
+    <string name="network_unknown">Unknown</string>
+    
+    <!-- Signal Strength -->
+    <string name="signal_excellent">Excellent</string>
+    <string name="signal_good">Good</string>
+    <string name="signal_fair">Fair</string>
+    <string name="signal_poor">Poor</string>
+    
+    <!-- Error Action Buttons -->
+    <string name="action_retry">Retry</string>
+    <string name="action_retry_refresh">Retry with Refresh</string>
+    <string name="action_check_connection">Check Connection</string>
+    <string name="action_open_settings">Open Settings</string>
+    <string name="action_contact_support">Contact Support</string>
+    <string name="action_try_different_location">Try Different Location</string>
+    
+    <!-- Error Suggestions -->
+    <string name="suggestion_check_internet">Check your internet connection</string>
+    <string name="suggestion_try_again_later">Try again in a few moments</string>
+    <string name="suggestion_move_to_better_signal">Move to an area with better signal</string>
+    <string name="suggestion_enable_location">Enable location services in settings</string>
+    <string name="suggestion_grant_permission">Grant location permission to use this feature</string>
+    <string name="suggestion_check_spelling">Check the spelling of your location</string>
+    <string name="suggestion_be_more_specific">Try being more specific (e.g., add city name)</string>
+    <string name="suggestion_try_nearby_location">Try a nearby location or landmark</string>
+    <string name="suggestion_contact_support">If this continues, please contact support</string>
+    
+    <!-- Status messages -->
+    <string name="status_getting_location">Getting location...</string>
+    <string name="status_location_denied">Location access denied</string>
+    <string name="status_location_unavailable">Location unavailable</string>
+    <string name="status_invalid_coordinates">Invalid location coordinates</string>
+    <string name="status_unable_to_get_location">Unable to get location</string>
+    
+    <!-- Toast messages -->
+    <string name="toast_added_to_favorites">Added to favorites! 💝</string>
+    <string name="toast_location_permission_required">Location permission is required to use this feature</string>
+    <string name="toast_network_restored">Network connection restored!</string>
+    <string name="toast_retrying_request">Retrying request...</string>
+    
+    <!-- Content descriptions for accessibility -->
+    <string name="content_desc_app_icon">App Icon</string>
+    <string name="content_desc_result_icon">Result Icon</string>
+    <string name="content_desc_favorite_icon">Add to Favorites</string>
+    <string name="content_desc_location_icon">Location Icon</string>
+    <string name="content_desc_search_icon">Search Icon</string>
+    <string name="content_desc_network_status">Network Status Indicator</string>
+    <string name="content_desc_error_icon">Error Icon</string>
+    <string name="content_desc_retry_button">Retry Button</string>
+</resources>

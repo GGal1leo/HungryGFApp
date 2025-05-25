@@ -1,0 +1,19 @@
+## This file must *NOT* be checked into Version Control Systems,
+# as it contains information specific to your local configuration.
+#
+# Location of the SDK. This is only used by Gradle.
+# For customization when using a Version Control System, please read the
+# header note.
+
+# Android SDK location
+sdk.dir=/path/to/your/Android/Sdk
+
+# Google Places API Key - Replace with your actual API key
+# Get your API key from: https://console.developers.google.com/
+# Enable Places API for your project
+GOOGLE_PLACES_API_KEY=YOUR_API_KEY_HERE
+
+# Instructions:
+# 1. Copy this file to local.properties (remove .template)
+# 2. Replace YOUR_API_KEY_HERE with your actual Google Places API key
+# 3. Replace /path/to/your/Android/Sdk with your actual Android SDK path
